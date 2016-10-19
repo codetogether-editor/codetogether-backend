@@ -6,7 +6,7 @@ config :codetogether,
 config :codetogether, Codetogether.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "fGTLAgrpEHfzxxxAvIfNCzzI1jP2gnrzKSRN9xh+9QH9pykJNALTcPJEr5unwUzq",
-  render_errors: [view: Codetogether.ErrorView, accepts: ~w(html json)],
+  render_errors: [view: Codetogether.ErrorView, accepts: ~w(json)],
   pubsub: [name: Codetogether.PubSub,
            adapter: Phoenix.PubSub.PG2]
 

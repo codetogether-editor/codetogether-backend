@@ -15,8 +15,8 @@ defmodule Codetogether.Mixfile do
 
   def application do
     [mod: {Codetogether, []},
-     applications: [:phoenix, :phoenix_pubsub, :phoenix_html, :cowboy, :logger, :gettext,
-                    :phoenix_ecto, :postgrex]]
+     applications: [:phoenix, :phoenix_pubsub, :cowboy, :logger, :gettext,
+                    :phoenix_ecto, :postgrex, :oauth2]]
   end
 
   defp elixirc_paths(:test), do: ["lib", "web", "test/support"]
@@ -27,8 +27,6 @@ defmodule Codetogether.Mixfile do
      {:phoenix_pubsub, "~> 1.0"},
      {:phoenix_ecto, "~> 3.0"},
      {:postgrex, ">= 0.0.0"},
-     {:phoenix_html, "~> 2.6"},
-     {:phoenix_live_reload, "~> 1.0", only: :dev},
      {:gettext, "~> 0.11"},
      {:cowboy, "~> 1.0"},
      {:oauth2, "~> 0.7"}]
