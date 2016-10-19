@@ -18,3 +18,8 @@ config :codetogether, Codetogether.Repo,
   database: "codetogether_dev",
   hostname: "localhost",
   pool_size: 10
+
+config :codetogether, Codetogether.OAuth.GitHub,
+  client_id:     {:system, "GITHUB_CLIENT_ID"},
+  client_secret: {:system, "GITHUB_CLIENT_SECRET"},
+  redirect_uri:  "http://localhost:8080"

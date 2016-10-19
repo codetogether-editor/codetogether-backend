@@ -12,5 +12,7 @@ config :codetogether, Codetogether.Repo,
   url: {:system, "DATABASE_URL"},
   pool_size: 20
 
-
-import_config "prod.secret.exs"
+config :codetogether, Codetogether.OAuth.GitHub,
+  client_id:     {:system, "GITHUB_CLIENT_ID"},
+  client_secret: {:system, "GITHUB_CLIENT_SECRET"},
+  redirect_uri:  {:system, "GITHUB_REDIRECT_URI"}
