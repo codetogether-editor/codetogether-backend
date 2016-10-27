@@ -3,7 +3,7 @@ use Mix.Config
 config :codetogether, Codetogether.Endpoint,
   http: [port: 4000],
   debug_errors: true,
-  code_reloader: false,
+  code_reloader: true,
   check_origin: false,
   watchers: []
 
@@ -22,4 +22,4 @@ config :codetogether, Codetogether.Repo,
 config :codetogether, Codetogether.OAuth.GitHub,
   client_id:     {:system, "GITHUB_CLIENT_ID"},
   client_secret: {:system, "GITHUB_CLIENT_SECRET"},
-  redirect_uri:  "http://localhost:8080"
+  redirect_uri:  "http://127.0.0.1:8080"

@@ -16,26 +16,14 @@ defmodule Codetogether.Web do
   below.
   """
 
-  def model do
-    quote do
-      use Ecto.Schema
-
-      import Ecto
-      import Ecto.Changeset
-      import Ecto.Query
-    end
-  end
-
   def controller do
     quote do
       use Phoenix.Controller
 
-      alias Codetogether.Repo
-      import Ecto
-      import Ecto.Query
-
       import Codetogether.Router.Helpers
       import Codetogether.Gettext
+
+      alias Codetogether.ErrorView
     end
   end
 

@@ -3,11 +3,13 @@ defmodule Codetogether.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+    plug Guardian.Plug.VerifyHeader
+    plug Guardian.Plug.LoadResource
   end
 
   scope "/", Codetogether do
     pipe_through :api
 
-    get "/", PageController, :index
+    post "/auth/:provider", AuthController, :authenticate
   end
 end

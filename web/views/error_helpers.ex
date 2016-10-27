@@ -26,4 +26,6 @@ defmodule Codetogether.ErrorHelpers do
       Gettext.dgettext(Codetogether.Gettext, "errors", msg, opts)
     end
   end
+
+  def translate_error(msg) when is_binary(msg), do: translate_error({msg, []})
 end

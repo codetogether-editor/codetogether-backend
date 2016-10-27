@@ -1,6 +1,23 @@
 defmodule Codetogether.ErrorView do
   use Codetogether.Web, :view
 
+  def render("errors.json", %{errors: errors}) when is_map(errors) do
+    %{errors: errors}
+  end
+
+  def render("errors.json", %{errors: errors}) when is_list(errors) do
+    errors = Enum.reduce(errors, %{}, fn {field, message}, acc ->
+      message = translate_error(message)
+      Map.update(acc, field, [message], &[message | &1])
+    end)
+    render("errors.json", %{errors: errors})
+  end
+
+  def render("errors.json", %{changeset: changeset}) do
+    errors = Ecto.Changeset.traverse_errors(changeset, &translate_error/1)
+    render("errors.json", %{errors: errors})
+  end
+
   def render("404.json", _assigns) do
     %{error: "Page not found"}
   end
