@@ -32,7 +32,8 @@ defmodule Codetogether.Mixfile do
      {:postgrex, ">= 0.0.0"},
      {:gettext, "~> 0.11"},
      {:cowboy, "~> 1.0"},
-     {:oauth2, "~> 0.7"}]
+     {:oauth2, "~> 0.7"},
+     {:distillery, "~> 0.10"}]
   end
 
   defp aliases do

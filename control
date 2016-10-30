@@ -1,0 +1,8 @@
+Package: codetogether
+Version: 0.0.1
+License: Apache2
+Architecture: amd64
+Priority: extra
+Section: misc
+Description: Automatically packaged by DistilleryPackage
+  0.0.1

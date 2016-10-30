@@ -4,6 +4,7 @@ config :codetogether, Codetogether.Endpoint,
   http: [port: {:system, "PORT"}],
   url: [host: "example.com", port: 80],
   secret_key_base: {:system, "SECRET_KEY_BASE"},
+  server: true
 
 config :logger, level: :info
 
@@ -17,5 +18,5 @@ config :codetogether, Codetogether.OAuth.GitHub,
   client_secret: {:system, "GITHUB_CLIENT_SECRET"},
   redirect_uri:  {:system, "GITHUB_REDIRECT_URI"}
 
-config :guardiam, Guardian,
+config :guardian, Guardian,
   secret_key: {:system, "GUARDIAN_SECRET_KEY"}
