@@ -16,7 +16,7 @@ config :codetogether, Codetogether.Repo,
 config :codetogether, Codetogether.OAuth.GitHub,
   client_id:     {:system, "GITHUB_CLIENT_ID"},
   client_secret: {:system, "GITHUB_CLIENT_SECRET"},
-  redirect_uri:  {:system, "GITHUB_REDIRECT_URI"}
+  redirect_uri:  "http://codetogether.michalmuskala.eu"
 
 config :guardian, Guardian,
   secret_key: {:system, "GUARDIAN_SECRET_KEY"}
