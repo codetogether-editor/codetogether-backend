@@ -16,3 +16,6 @@ config :codetogether, Codetogether.OAuth.GitHub,
   client_id:     {:system, "GITHUB_CLIENT_ID"},
   client_secret: {:system, "GITHUB_CLIENT_SECRET"},
   redirect_uri:  {:system, "GITHUB_REDIRECT_URI"}
+
+config :guardiam, Guardian,
+  secret_key: {:system, "GUARDIAN_SECRET_KEY"}

@@ -13,3 +13,7 @@ config :codetogether, Codetogether.Repo,
   database: "codetogether_test",
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox
+
+config :guardian, Guardian,
+  allowed_algos: ["HS256"],
+  secret_key: "ZpBNKoOWFOAk-B43qXe_Tg"

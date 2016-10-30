@@ -39,7 +39,7 @@ defmodule Codetogether.User do
   def by_authentication_query(uid, provider) do
     from u in User.Account,
       join:   a in assoc(u, :authentications),
-      where:  a.uid == ^uid and a.provider == ^provider,
+      where:  a.uid == ^(uid || "") and a.provider == ^(provider || ""),
       select: %{u | current_authentication: a}
   end
 

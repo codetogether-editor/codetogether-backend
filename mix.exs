@@ -27,7 +27,7 @@ defmodule Codetogether.Mixfile do
      {:phoenix_pubsub, "~> 1.0"},
      {:phoenix_ecto, "~> 3.0"},
      {:ecto, "~> 2.1-rc", override: true},
-     {:guardian, "~> 0.13"},
+     {:guardian, "~> 0.13", github: "ueberauth/guardian"},
      {:corsica, "~> 0.5"},
      {:postgrex, ">= 0.0.0"},
      {:gettext, "~> 0.11"},
