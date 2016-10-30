@@ -21,6 +21,7 @@ defmodule DistilleryPackage do
     unpack_release(workdir(), archive_path(release, "tar.gz"), release)
     compress(workdir(), "data", release)
     add_lifetime_scripts(workdir(), release)
+    add_init_script(workdir(), release)
     add_control_file(workdir(), release)
     compress(workdir(), "control", release)
     build_package(workdir(), release)
@@ -57,6 +58,13 @@ defmodule DistilleryPackage do
     debug("Writing postinst script to: #{file}")
     File.write!(file, postinst_template(Map.from_struct(release)))
     File.chmod!(file, 0o755)
+  end
+
+  defp add_init_script(path, release) do
+    file = Path.join([path, "data", "etc", "init", "#{release.name}.conf"])
+    File.mkdir_p!(Path.dirname(file))
+    File.write!(file, upstart_template(Map.from_struct(release),
+          ["PORT", "SECRET_KEY_BASE", "DATABASE_URL", "GITHUB_CLIENT_ID", "GITHUB_CLIENT_SECRET", "GITHUB_REDIRECT_URL", "GUARDIAN_SECRET_KEY"]))
   end
 
   defp add_control_file(path, release) do
@@ -138,5 +146,37 @@ defmodule DistilleryPackage do
   Section: misc
   Description: Automatically packaged by DistilleryPackage
     <%= @version %>
+    CodeTogether backend
   """, [:assigns])
+
+  EEx.function_from_string(:defp, :upstart_template, """
+  description "CodeTogether backend"
+
+  setuid <%= @name %>
+  setgid <%= @name %>
+
+  start on runlevel [2345]
+  stop on runlevel [016]
+
+  expect fork
+  respawn
+
+  env MIX_ENV=prod
+  export MIX_ENV
+
+  env HOME=/opt/<%= @name %>
+  export HOME
+
+  env LC_ALL="en_US.utf8"
+  export LC_ALL
+
+  <%= for copy_env <- copy_env do %>
+  env <%= copy_env %>=<%= System.get_env(copy_env) %>
+  export <%= copy_env %>
+  <% end %>
+
+  pre-start exec /bin/sh /opt/<%= @name %>/bin/<%= @name %> start
+
+  post-stop exec /bin/sh /opt/<%= @name %>/bin/<%= @name %> stop
+  """, [:assigns, :copy_env])
 end
