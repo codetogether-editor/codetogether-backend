@@ -54,17 +54,24 @@ defmodule DistilleryPackage do
   end
 
   defp add_lifetime_scripts(path, release) do
-    file = Path.join([path, "control", "postinst"])
-    debug("Writing postinst script to: #{file}")
-    File.write!(file, postinst_template(Map.from_struct(release)))
+    assigns = Map.from_struct(release)
+    write_lifetime_script(path, "postinst", postinst_template(assigns))
+    write_lifetime_script(path, "prerm", prerm_template(assigns))
+  end
+
+  defp write_lifetime_script(path, name, body) do
+    file = Path.join([path, "control", name])
+    debug("Writing #{name} script to: #{file}")
+    File.write!(file, body)
     File.chmod!(file, 0o755)
   end
 
   defp add_init_script(path, release) do
     file = Path.join([path, "data", "etc", "init", "#{release.name}.conf"])
+    debug("Writing upstart script to: #{file}")
     File.mkdir_p!(Path.dirname(file))
     File.write!(file, upstart_template(Map.from_struct(release),
-          ["PORT", "SECRET_KEY_BASE", "DATABASE_URL", "GITHUB_CLIENT_ID", "GITHUB_CLIENT_SECRET", "GITHUB_REDIRECT_URL", "GUARDIAN_SECRET_KEY"]))
+          ["PORT", "SECRET_KEY_BASE", "DATABASE_URL", "GITHUB_CLIENT_ID", "GITHUB_CLIENT_SECRET", "GUARDIAN_SECRET_KEY"]))
   end
 
   defp add_control_file(path, release) do
@@ -126,15 +133,36 @@ defmodule DistilleryPackage do
   EEx.function_from_string(:defp, :postinst_template, """
   #!/bin/sh
 
-  set -e
+  if (id -u <%= @name %> &>/dev/null); then
+    echo "Skipping adding user, since it already exists"
+  else
+    adduser --system <%= @name %> --group \
+      --disabled-login --disabled-password \
+      --home /opt/<%= @name %> --no-create-home || true
+  fi
 
-  adduser --system <%= @name %> --group \
-    --disabled-login --disabled-password \
-    --home /opt/<%= @name %> --no-create-home
+  chown -R <%= @name %>:<%= @name %> /opt/<%= @name %> || true
 
-  chown -R <%= @name %>:<%= @name %> /opt/<%= @name %>
+  if [ -e /etc/init.d/<%= @name %>]; then
+    echo "Found system service, skipping linking upstart"
+  else
+    ln -s /lib/init/upstart-job /etc/init.d/codetogether || true
+  fi
 
-  exit 0
+  echo "Starting service"
+  service <%= @name %> start || true
+
+  """, [:assigns])
+
+  EEx.function_from_string(:defp, :prerm_template, """
+  #!/bin/sh
+
+  if (service <%= @name %> status | grep stop &> /dev/null); then
+    echo "Service already stopped"
+  else
+    echo "Stopping service"
+    service <%= @name %> stop || true
+  fi
   """, [:assigns])
 
   EEx.function_from_string(:defp, :control_template, """
@@ -171,7 +199,7 @@ defmodule DistilleryPackage do
   export LC_ALL
 
   <%= for copy_env <- copy_env do %>
-  env <%= copy_env %>=<%= System.get_env(copy_env) %>
+  env <%= copy_env %>="<%= System.get_env(copy_env) %>"
   export <%= copy_env %>
   <% end %>
 
