@@ -11,5 +11,7 @@ defmodule Codetogether.Router do
     pipe_through :api
 
     post "/auth/:provider", AuthController, :authenticate
+
+    get "/user", UserController, :show
   end
 end

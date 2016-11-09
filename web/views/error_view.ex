@@ -18,6 +18,10 @@ defmodule Codetogether.ErrorView do
     render("errors.json", %{errors: errors})
   end
 
+  def render("unauthenticated.json", _assigns) do
+    %{error: "Unauthenticated"}
+  end
+
   def render("404.json", _assigns) do
     %{error: "Page not found"}
   end

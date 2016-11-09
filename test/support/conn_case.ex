@@ -26,6 +26,8 @@ defmodule Codetogether.ConnCase do
       import Ecto.Query
 
       import Codetogether.Router.Helpers
+      import Codetogether.ConnCase
+      import Codetogether.Factory
 
       # The default endpoint for testing
       @endpoint Codetogether.Endpoint
@@ -40,5 +42,9 @@ defmodule Codetogether.ConnCase do
     end
 
     {:ok, conn: Phoenix.ConnTest.build_conn()}
+  end
+
+  def authenticate(conn, user) do
+    Guardian.Plug.api_sign_in(conn, user)
   end
 end

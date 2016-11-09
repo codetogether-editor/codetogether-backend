@@ -33,7 +33,8 @@ defmodule Codetogether.Mixfile do
      {:gettext, "~> 0.11"},
      {:cowboy, "~> 1.0"},
      {:oauth2, "~> 0.7"},
-     {:distillery, "~> 0.10"}]
+     {:distillery, "~> 0.10"},
+     {:ex_machina, "~> 1.0", only: :test}]
   end
 
   defp aliases do
