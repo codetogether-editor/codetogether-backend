@@ -25,5 +25,7 @@ end
 
 release :codetogether do
   set version: current_version(:codetogether)
+  set commands: [
+    task: "rel/commands/task"
+  ]
 end
-
