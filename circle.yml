@@ -13,8 +13,7 @@ dependencies:
 
 test:
   override:
-    - echo "No tests for now"
-    # - mix test
+    - mix test
 
 deployment:
   production:
