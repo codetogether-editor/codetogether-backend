@@ -55,7 +55,7 @@ defmodule DistilleryPackage do
 
   defp add_lifetime_scripts(path, release) do
     assigns = Map.from_struct(release)
-    write_lifetime_script(path, "postinst", postinst_template(assigns))
+    write_lifetime_script(path, "postinst", postinst_template(assigns, copy_env()))
     write_lifetime_script(path, "prerm", prerm_template(assigns))
   end
 
@@ -70,9 +70,11 @@ defmodule DistilleryPackage do
     file = Path.join([path, "data", "etc", "init", "#{release.name}.conf"])
     debug("Writing upstart script to: #{file}")
     File.mkdir_p!(Path.dirname(file))
-    File.write!(file, upstart_template(Map.from_struct(release),
-          ["PORT", "SECRET_KEY_BASE", "DATABASE_URL", "GITHUB_CLIENT_ID", "GITHUB_CLIENT_SECRET", "GUARDIAN_SECRET_KEY"]))
+    File.write!(file, upstart_template(Map.from_struct(release), copy_env()))
   end
+
+  defp copy_env(),
+     do: ["PORT", "SECRET_KEY_BASE", "DATABASE_URL", "GITHUB_CLIENT_ID", "GITHUB_CLIENT_SECRET", "GUARDIAN_SECRET_KEY"]
 
   defp add_control_file(path, release) do
     file = Path.join([path, "control", "control"])
@@ -153,9 +155,12 @@ defmodule DistilleryPackage do
   service <%= @name %> start || true
 
   echo "Migrating database"
+  <%= for copy_env <- copy_env do %>
+  export <%= copy_env %>="<%= System.get_env(copy_env) %>"
+  <% end %>
   /opt/<%= @name %>/bin/<%= @name %> task migrate
 
-  """, [:assigns])
+  """, [:assigns, copy_env])
 
   EEx.function_from_string(:defp, :prerm_template, """
   #!/bin/sh
