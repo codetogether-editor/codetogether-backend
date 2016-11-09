@@ -155,12 +155,12 @@ defmodule DistilleryPackage do
   service <%= @name %> start || true
 
   echo "Migrating database"
-  <%= for copy_env <- copy_env do %>
-  export <%= copy_env %>="<%= System.get_env(copy_env) %>"
+  <%= for env <- copy_env do %>
+  export <%= env %>="<%= System.get_env(env) %>"
   <% end %>
   /opt/<%= @name %>/bin/<%= @name %> task migrate
 
-  """, [:assigns, copy_env])
+  """, [:assigns, :copy_env])
 
   EEx.function_from_string(:defp, :prerm_template, """
   #!/bin/sh
@@ -206,9 +206,9 @@ defmodule DistilleryPackage do
   env LC_ALL="en_US.utf8"
   export LC_ALL
 
-  <%= for copy_env <- copy_env do %>
-  env <%= copy_env %>="<%= System.get_env(copy_env) %>"
-  export <%= copy_env %>
+  <%= for env <- copy_env do %>
+  env <%= env %>="<%= System.get_env(env) %>"
+  export <%= env %>
   <% end %>
 
   pre-start exec /bin/sh /opt/<%= @name %>/bin/<%= @name %> start
