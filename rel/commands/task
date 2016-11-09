@@ -1,0 +1,22 @@
+#!/bin/sh
+
+# Consume script name
+shift
+
+FUNCTION="$1"; shift
+
+# Save extra arguments
+ARGS="$@"
+
+set -- "$BINDIR/erlexec" \
+    -boot "$REL_DIR/start_clean" \
+    -boot_var ERTS_LIB_DIR "$ERTS_LIB_DIR" \
+    -env ERL_LIBS "$REL_LIB_DIR" \
+    -pa "$CONSOLIDATED_DIR" \
+    -config "$SYS_CONFIG_PATH" \
+    -noshell \
+    -s 'Elixir.Codetogether.Release.Task' "$FUNCTION" \
+    -extra "$ARGS"
+
+$BINDIR/erlexec $@
+exit "$?"

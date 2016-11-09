@@ -16,5 +16,4 @@ erl_crash.dump
 /config/prod.secret.exs
 
 # Release
-/rel/*
-!/rel/config.exs
+/rel/codetogether
