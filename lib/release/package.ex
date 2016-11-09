@@ -143,7 +143,7 @@ defmodule DistilleryPackage do
 
   chown -R <%= @name %>:<%= @name %> /opt/<%= @name %> || true
 
-  if [ -e /etc/init.d/<%= @name %>]; then
+  if [ -e /etc/init.d/<%= @name %> ]; then
     echo "Found system service, skipping linking upstart"
   else
     ln -s /lib/init/upstart-job /etc/init.d/codetogether || true
@@ -151,6 +151,9 @@ defmodule DistilleryPackage do
 
   echo "Starting service"
   service <%= @name %> start || true
+
+  echo "Migrating database"
+  /opt/<%= @name %>/bin/<%= @name %> task migrate
 
   """, [:assigns])
 
