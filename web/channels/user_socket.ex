@@ -2,7 +2,8 @@ defmodule Codetogether.UserSocket do
   use Phoenix.Socket
 
   ## Channels
-  # channel "room:*", Codetogether.RoomChannel
+  # channel "file:*", Codetogether.FileChannel
+  channel "ping", Codetogether.PingChannel
 
   ## Transports
   transport :websocket, Phoenix.Transports.WebSocket
@@ -19,8 +20,15 @@ defmodule Codetogether.UserSocket do
   #
   # See `Phoenix.Token` documentation for examples in
   # performing token verification on connect.
-  def connect(_params, socket) do
-    {:ok, socket}
+  def connect(%{"token" => jwt} = params, socket) do
+    case Guardian.Phoenix.Socket.sign_in(socket, jwt, params) do
+      {:ok, socket, _data} -> {:ok, socket}
+      _                    -> :error
+    end
+  end
+
+  def connect(_params, _socket) do
+    :error
   end
 
   # Socket id's are topics that allow you to identify all sockets for a given user:
