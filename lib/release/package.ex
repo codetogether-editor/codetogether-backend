@@ -135,7 +135,7 @@ defmodule DistilleryPackage do
   EEx.function_from_string(:defp, :postinst_template, """
   #!/bin/sh
 
-  if (id -u <%= @name %> &>/dev/null); then
+  if $(id -u <%= @name %> &>/dev/null); then
     echo "Skipping adding user, since it already exists"
   else
     adduser --system <%= @name %> --group \
@@ -151,8 +151,9 @@ defmodule DistilleryPackage do
     ln -s /lib/init/upstart-job /etc/init.d/codetogether || true
   fi
 
-  echo "Starting service"
+  echo "Restarting service"
   service <%= @name %> start || true
+  service <%= @name %> restart || true
 
   echo "Migrating database"
   <%= for env <- copy_env do %>
