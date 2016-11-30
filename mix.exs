@@ -16,7 +16,8 @@ defmodule Codetogether.Mixfile do
   def application do
     [mod: {Codetogether, []},
      applications: [:phoenix, :phoenix_pubsub, :cowboy, :logger, :gettext,
-                    :phoenix_ecto, :postgrex, :oauth2, :guardian, :corsica]]
+                    :phoenix_ecto, :postgrex, :oauth2, :guardian, :corsica,
+                    :tap, :recon, :runtime_tools]]
   end
 
   defp elixirc_paths(:test), do: ["lib", "web", "test/support"]
@@ -34,8 +35,8 @@ defmodule Codetogether.Mixfile do
      {:cowboy, "~> 1.0"},
      {:oauth2, "~> 0.7"},
      {:distillery, "~> 0.10"},
-     {:tap, "~> 0.1"},
      {:recon, "~> 2.3"},
+     {:tap, "~> 0.1"},
      {:ex_machina, "~> 1.0", only: :test}]
   end
 
