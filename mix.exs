@@ -34,6 +34,8 @@ defmodule Codetogether.Mixfile do
      {:cowboy, "~> 1.0"},
      {:oauth2, "~> 0.7"},
      {:distillery, "~> 0.10"},
+     {:tap, "~> 0.1"},
+     {:recon, "~> 2.3"},
      {:ex_machina, "~> 1.0", only: :test}]
   end
 
