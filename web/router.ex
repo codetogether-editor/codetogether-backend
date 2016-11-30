@@ -13,5 +13,7 @@ defmodule Codetogether.Router do
     post "/auth/:provider", AuthController, :authenticate
 
     get "/user", UserController, :show
+
+    resources "/files", FileController, only: [:create]
   end
 end
