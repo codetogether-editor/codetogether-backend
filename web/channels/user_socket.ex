@@ -6,7 +6,8 @@ defmodule Codetogether.UserSocket do
   channel "ping", Codetogether.PingChannel
 
   ## Transports
-  transport :websocket, Phoenix.Transports.WebSocket
+  transport :websocket, Phoenix.Transports.WebSocket,
+    check_origin: ["//localhost", "127.0.0.1:8080"]
   # transport :longpoll, Phoenix.Transports.LongPoll
 
   # Socket params are passed from the client and can
