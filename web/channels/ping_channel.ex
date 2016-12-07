@@ -9,5 +9,6 @@ defmodule Codetogether.PingChannel do
   def handle_in("ping", %{"msg" => message}, socket) do
     user = current_resource(socket)
     broadcast!(socket, "pong", %{msg: message, from: user.id})
+    {:noreply, socket}
   end
 end
