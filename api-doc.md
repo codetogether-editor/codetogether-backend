@@ -75,8 +75,21 @@ Retrieves a user. Requires authentication
 Retrieves the current logged in user.
 
 #### Response on success
-The same as for `GET /users/:id`
-
+```
+200 Ok
+{
+  user: {
+    id: "",
+    name: "",
+    email: "",
+    avatar_url: ""
+    files: [{
+      file_id: "",
+      name:    ""
+    }]
+  }
+}
+```
 
 ## Channels API
 

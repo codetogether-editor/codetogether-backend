@@ -2,7 +2,7 @@ defmodule Codetogether.UserController do
   use Codetogether.Web, :controller
   use Guardian.Phoenix.Controller
 
-  alias Codetogether.User
+  alias Codetogether.{User, File}
 
   plug Guardian.Plug.EnsureAuthenticated, handler: Codetogether.ErrorHandler
 
@@ -11,6 +11,6 @@ defmodule Codetogether.UserController do
   end
 
   def me(conn, _params, user, _claims) do
-    render(conn, "show.json", data: user)
+    render(conn, "show.json", data: user, files: File.all_for_user(user))
   end
 end

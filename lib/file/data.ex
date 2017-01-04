@@ -9,7 +9,8 @@ defmodule Codetogether.File.Data do
     field :name, :string
 
     belongs_to :owner,  User.Account, type: :binary_id
-    has_many   :events, File.Event
+    has_many   :events, File.Event, foreign_key: :file_id
+    has_many   :users,  File.User,  foreign_key: :file_id
 
     timestamps()
   end

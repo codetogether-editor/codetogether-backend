@@ -6,9 +6,10 @@ defmodule Codetogether.FileControllerTest do
   describe "create" do
     @tag :login
     test "creates file when logged in", %{conn: conn} do
-      conn = post(conn, file_path(conn, :create))
+      conn = post(conn, file_path(conn, :create), file: %{name: "foo"})
       assert %{"file" => resp} = json_response(conn, :created)
       assert resp["id"]
+      assert resp["name"] == "foo"
     end
 
     test "responds with unauthorized when not authenticated", %{conn: conn} do
