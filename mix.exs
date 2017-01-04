@@ -37,7 +37,8 @@ defmodule Codetogether.Mixfile do
      {:distillery, "~> 0.10"},
      {:recon, "~> 2.3"},
      {:tap, "~> 0.1"},
-     {:ex_machina, "~> 1.0", only: :test}]
+     {:ex_machina, "~> 1.0", only: :test},
+     {:gproc, "~> 0.6"}]
   end
 
   defp aliases do

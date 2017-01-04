@@ -18,7 +18,7 @@ defmodule Codetogether.User do
     if account = Repo.one(by_authentication_query(uid, provider)) do
       {:ok, account}
     else
-      {:error, "bad user"}
+      {:error, "no such user"}
     end
   end
 
