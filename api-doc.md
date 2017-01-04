@@ -78,7 +78,7 @@ The same as for `GET /users/:id`
 
 ## Channels API
 
-### file:<file_id>
+### file:[file_id]
 
 #### Incoming: "event"
 
