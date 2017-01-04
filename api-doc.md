@@ -36,8 +36,9 @@ Retrieves a file. Requires authentication
 200 Ok
 {
   file: {
-    id: "",
-    name: ""
+    id:    "",
+    name:  ""
+    users: [""] # List of user ids of users that are involved in that file
   }
 }
 ```
@@ -56,6 +57,7 @@ Retrieves a user. Requires authentication
 200 Ok
 {
   user: {
+    id: "",
     name: "",
     email: "",
     avatar_url: ""

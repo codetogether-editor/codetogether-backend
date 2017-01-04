@@ -8,7 +8,7 @@ defmodule Codetogether.File.Data do
   schema "files" do
     field :name, :string
 
-    belongs_to :user,   User.Account, type: :binary_id
+    belongs_to :owner,  User.Account, type: :binary_id
     has_many   :events, File.Event
 
     timestamps()

@@ -8,6 +8,6 @@ defmodule Codetogether.FileView do
   def render("file.json", %{file: file}) do
     %{id:     file.id,
       name:   file.name,
-      events: Enum.map(file.events, &(&1.data))}
+      users:  Enum.map(file.users, &(&1.user_id))}
   end
 end
