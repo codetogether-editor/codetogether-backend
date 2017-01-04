@@ -13,7 +13,7 @@ defmodule Codetogether.File do
   def join_file(id, user) do
     file = find_by_id(id)
     user = record_file_user(file, user)
-    {:ok, update_in(file.users, &[user | &1])}
+    {:ok, update_in(file.users, &(List.wrap(user) ++ &1))}
   end
 
   def find_by_id(id) do
