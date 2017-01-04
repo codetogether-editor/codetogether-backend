@@ -6,7 +6,7 @@ config :codetogether, Codetogether.Endpoint,
   secret_key_base: {:system, "SECRET_KEY_BASE"},
   server: true
 
-config :logger, level: :info
+config :logger, level: :debug
 
 config :codetogether, Codetogether.Repo,
   adapter: Ecto.Adapters.Postgres,
