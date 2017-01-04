@@ -6,6 +6,9 @@ defmodule Codetogether.UserView do
   end
 
   def render("user.json", %{user: account}) do
-    %{name: account.name, email: account.email, avatar_url: account.avatar_url}
+    %{id:         account.id,
+      name:       account.name,
+      email:      account.email,
+      avatar_url: account.avatar_url}
   end
 end
