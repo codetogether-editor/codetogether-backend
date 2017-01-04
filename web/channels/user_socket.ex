@@ -2,7 +2,7 @@ defmodule Codetogether.UserSocket do
   use Phoenix.Socket
 
   ## Channels
-  # channel "file:*", Codetogether.FileChannel
+  channel "file:*", Codetogether.FileChannel
   channel "ping", Codetogether.PingChannel
 
   ## Transports
@@ -23,8 +23,11 @@ defmodule Codetogether.UserSocket do
   # performing token verification on connect.
   def connect(%{"token" => jwt} = params, socket) do
     case Guardian.Phoenix.Socket.sign_in(socket, jwt, params) do
-      {:ok, socket, _data} -> {:ok, socket}
-      _                    -> :error
+      {:ok, socket, _data} ->
+        user = Guardian.Phoenix.Socket.current_resource(socket)
+        {:ok, assign(socket, :current_user, user)}
+      _ ->
+        :error
     end
   end
 

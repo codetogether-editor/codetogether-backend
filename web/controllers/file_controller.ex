@@ -19,7 +19,7 @@ defmodule Codetogether.FileController do
     end
   end
 
-  def show(conn, %{"id" => id}, _user, _claims) do
+  def show(conn, %{"id" => id}, user, _claims) do
     case File.join_file(id, user) do
       {:ok, file} ->
         conn

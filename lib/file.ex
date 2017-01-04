@@ -1,7 +1,7 @@
 defmodule Codetogether.File do
   defstruct [:id, :pid]
 
-  alias Codetogether.File
+  alias Codetogether.{File, Repo}
 
   def create(params, user) do
     %File.Data{user_id: user.id}

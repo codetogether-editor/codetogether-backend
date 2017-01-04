@@ -5,6 +5,10 @@ defmodule Codetogether.User do
 
   import Ecto.Query, only: [from: 2]
 
+  def by_id(id) do
+    Repo.get!(User.Account, id)
+  end
+
   def from_oauth(provider, code) do
     with {:ok, provider} <- OAuth.provider_module(provider),
          {:ok, client}   <- provider.get_token(code),
