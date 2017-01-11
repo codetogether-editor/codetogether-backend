@@ -14,16 +14,23 @@ defmodule Codetogether.FileChannel do
   end
 
   def handle_in("event", %{"data" => data}, socket) do
-    payload = %{"data" => data, "user_id" => socket.assigns.current_user.id}
-    broadcast_from!(socket, "event", data)
-    File.add_event!(socket.assigns.file, data)
-    {:noreply, socket}
+    event = File.add_event!(socket.assigns.file, data, socket.assigns.current_user)
+    broadcast_from!(socket, "event", event_payload(event))
+    {:reply, :ok, socket}
+  end
+
+  def handle_in("event", _, socket) do
+    {:reply, :error, socket}
   end
 
   def handle_info(:catch_up, socket) do
     for event <- socket.assigns.file.events do
-      push(socket, "event", event.data)
+      push(socket, "event", event_payload(event))
     end
     {:noreply, socket}
+  end
+
+  defp event_payload(%{user_id: user_id, data: data}) do
+    %{"data" => data, "user_id" => user_id}
   end
 end

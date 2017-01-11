@@ -28,8 +28,8 @@ defmodule Codetogether.File do
     Repo.all(query)
   end
 
-  def add_event!(file, data) do
-    Repo.insert!(%File.Event{file_id: file.id, data: data})
+  def add_event!(file, data, user) do
+    Repo.insert!(%File.Event{file_id: file.id, data: data, user_id: user.id})
   end
 
   defp file_query() do
