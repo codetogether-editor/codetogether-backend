@@ -15,6 +15,6 @@ defmodule Codetogether.Router do
     get "/user", UserController, :me
     resources "/users", UserController, only: [:show]
 
-    resources "/files", FileController, only: [:create]
+    resources "/files", FileController, only: [:create, :show]
   end
 end
