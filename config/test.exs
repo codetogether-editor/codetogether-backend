@@ -4,7 +4,7 @@ config :codetogether, Codetogether.Endpoint,
   http: [port: 4001],
   server: false
 
-config :logger, level: :warn
+config :logger, level: :debug
 
 config :codetogether, Codetogether.Repo,
   adapter: Ecto.Adapters.Postgres,
