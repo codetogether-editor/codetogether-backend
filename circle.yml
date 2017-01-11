@@ -5,6 +5,7 @@ machine:
 dependencies:
   cache_directories:
     - ~/.asdf
+    - ~/.cache/rebar3
     - deps
   pre:
     - ./scripts/ci-setup.sh
