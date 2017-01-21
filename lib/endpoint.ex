@@ -19,7 +19,7 @@ defmodule Codetogether.Endpoint do
   plug Plug.Head
 
   plug Corsica,
-    origins: ["http://localhost", "http://127.0.0.1:8080"],
+    origins: ["http://localhost", "http://127.0.0.1:8080", "http://code-together.herokuapp.com"],
     allow_headers: ["content-type", "authorization"]
 
   plug Codetogether.Router
