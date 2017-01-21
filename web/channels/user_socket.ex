@@ -7,7 +7,7 @@ defmodule Codetogether.UserSocket do
 
   ## Transports
   transport :websocket, Phoenix.Transports.WebSocket,
-    check_origin: ["//localhost", "//127.0.0.1:8080"]
+    check_origin: ["//localhost", "//127.0.0.1:8080", "//code-together.herokuapp.com"]
   # transport :longpoll, Phoenix.Transports.LongPoll
 
   # Socket params are passed from the client and can
